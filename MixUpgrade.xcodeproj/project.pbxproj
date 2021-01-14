@@ -12,7 +12,6 @@
 		711A34381DC3539000F5B5D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 711A34371DC3539000F5B5D2 /* Assets.xcassets */; };
 		711A343B1DC3539000F5B5D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 711A34391DC3539000F5B5D2 /* Main.storyboard */; };
 		BA36280F244D933B009D3BD7 /* parse_uart.py in Resources */ = {isa = PBXBuildFile; fileRef = BA36280E244D933B009D3BD7 /* parse_uart.py */; };
-		BA362811244DA147009D3BD7 /* recycle.png in Resources */ = {isa = PBXBuildFile; fileRef = BA362810244DA147009D3BD7 /* recycle.png */; };
 		BA4E23FD24C04EF50065C485 /* libzmq.la in Resources */ = {isa = PBXBuildFile; fileRef = BA4E23EE24C04EF50065C485 /* libzmq.la */; };
 		BA4E23FE24C04EF50065C485 /* Publisher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4E23EF24C04EF50065C485 /* Publisher.cpp */; };
 		BA4E23FF24C04EF50065C485 /* libzmq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4E23F024C04EF50065C485 /* libzmq.a */; };
@@ -83,7 +82,6 @@
 		711A343A1DC3539000F5B5D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		711A343C1DC3539000F5B5D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA36280E244D933B009D3BD7 /* parse_uart.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = parse_uart.py; sourceTree = "<group>"; };
-		BA362810244DA147009D3BD7 /* recycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recycle.png; sourceTree = "<group>"; };
 		BA4E23EB24C04EF50065C485 /* Replier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Replier.hpp; sourceTree = "<group>"; };
 		BA4E23EC24C04EF50065C485 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
 		BA4E23ED24C04EF50065C485 /* zmq_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zmq_utils.h; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 				711A343C1DC3539000F5B5D2 /* Info.plist */,
 				BA9BD42225AF2BB60085721B /* AceFW */,
 				BA36280E244D933B009D3BD7 /* parse_uart.py */,
-				BA362810244DA147009D3BD7 /* recycle.png */,
 				711A34311DC3539000F5B5D2 /* Supporting Files */,
 			);
 			path = MixUpgrade;
@@ -447,7 +444,6 @@
 				BA9BD42325AF2BB60085721B /* AceFW in Resources */,
 				711A343B1DC3539000F5B5D2 /* Main.storyboard in Resources */,
 				BA9BD43C25AF3D720085721B /* TextView.xib in Resources */,
-				BA362811244DA147009D3BD7 /* recycle.png in Resources */,
 				BA4E23FD24C04EF50065C485 /* libzmq.la in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -57,6 +57,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 
 @property (copy) NSString *aceFwPath;
 @property (copy) NSString *mixFwPath;
+@property (copy) NSString *aceCheckPath;
 @end
 
 @implementation ViewController
@@ -92,7 +93,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     [self.viewCh2 setPingIpAddress:@"169.254.1.33"];
     [self.viewCh3 setPingIpAddress:@"169.254.1.34"];
     [self.viewCh4 setPingIpAddress:@"169.254.1.35"];
-    
+    self.aceCheckPath = [[NSBundle mainBundle] pathForResource:@"fwdl_ace_check.exp" ofType:nil];
     self.aceFwPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"AceFW"];
     NSArray *aceBinFiles = [FileManager cw_getFilenamelistOfType:@"bin" fromDirPath:self.aceFwPath ];
     [self.aceBinPopBtn removeAllItems];
@@ -115,6 +116,9 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     [self getChannelsSate];
     
 }
+
+
+
 -(void)getChannelsSate{
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         while (1) {
@@ -128,6 +132,8 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
                 [self setImageWithImageView:self.isConnectImage1 icon:@"state_on"];
 
                 [self setNeedUpgradeBtnState:self.needUpgradeBtn1 isConnect:YES];
+                
+                
             }
             if (![self getIpState:@"169.254.1.33"]) {
                 [self setImageWithImageView:self.isConnectImage2 icon:@"state_off"];
@@ -170,7 +176,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     dispatch_async(dispatch_get_main_queue(), ^{
         
         needUpgradeBtn.state = isConnect;
-        needUpgradeBtn.enabled = isConnect;
+//        needUpgradeBtn.enabled = isConnect;
         
     });
 }
@@ -198,13 +204,45 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     return isOk;
 }
 
-
+//-(BOOL)checkFile:(NSString *)fileName ip:(NSString *)ip{
+//    NSString *cmd1 = [NSString stringWithFormat:@"ssh root@%@",ip];
+//    NSString *cmd2 = @"yes\n";
+//    NSString *cmd3 = @"123456\n";
+//    NSString *log1 = [Task termialWithCmd:cmd1];
+//    if ([log1 containsString:@"yes/no"]) {
+//        [Task termialWithCmd:cmd2];
+//    }
+//    
+//    if ([log1 containsString:@"password"]) {
+//        NSString *log3 = [Task termialWithCmd:cmd3];
+//        if ([log3 containsString:@"root@ubuntu-arm:~#"]) {
+//            NSString *check = [Task termialWithCmd:@"ls /mix/dut_firmware/ch1/"];
+//            if ([check containsString:self.aceBinPopBtn.title]) {
+//                return YES;
+//            }
+//        }
+//        
+//        
+//        
+//    }else{
+//        }
+//    
+//    return NO;
+////    NSString *log1 = [Task termialWithCmd:cmd];
+//    
+//}
 - (IBAction)aceUpdate:(id)sender {
     NSString *aceExpPath=[self.aceFwPath stringByAppendingPathComponent:@"fwdl_scp.exp"];
     NSString *aceBinPath=[self.aceFwPath stringByAppendingPathComponent:self.aceBinPopBtn.title];
     if (self.needUpgradeBtn1.state) {
 
-        NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,@"169.254.1.32"];
+        NSString *ip =@"169.254.1.32";
+        NSString *fileName = self.aceBinPopBtn.title;
+//        BOOL checkFileExist = [self checkFile:fileName ip:ip];
+//        if (checkFileExist) {
+//            [self.textView showLog:[NSString stringWithFormat:@"UUT1:%@ already existed in mix fw",fileName]];
+//        }
+        NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
 
         NSString *log1 = [Task termialWithCmd:cmd];
         [self.textView showLog:log1];

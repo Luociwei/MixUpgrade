@@ -1,0 +1,22 @@
+#!/usr/bin/expect 
+#########################################################################
+# File Name: fwdl_scp.exp
+# Created Time: 2018年03月7日 星期2 11时06分31秒
+# Use:./fwdl_scp.exp  xxx.bin  169.254.1.35
+#########################################################################
+
+set timeout 5
+set  IP		[ lindex $argv 0 ]
+set  HOST	root@$IP
+
+spawn ssh $HOST ls /mix/dut_firmware/ch1/
+expect {
+	"*yes/no*"		{ send "yes\n";exp_continue }
+	"*password*"	{ send "123456\n" }
+}
+
+sleep 0.2
+
+interact
+#exit
+

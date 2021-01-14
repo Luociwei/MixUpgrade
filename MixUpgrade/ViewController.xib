@@ -8,8 +8,19 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ViewController">
             <connections>
+                <outlet property="aceBinPopBtn" destination="UTs-tA-9hc" id="20A-JZ-Y1m"/>
+                <outlet property="aceMd5PopBtn" destination="LYH-2F-zCR" id="7wO-q5-VZi"/>
+                <outlet property="aceUpdateBtn" destination="ca9-DC-6vc" id="PF5-69-NB5"/>
+                <outlet property="isConnectImage1" destination="Mfr-FD-LM6" id="raY-Yj-ljc"/>
+                <outlet property="isConnectImage2" destination="MXJ-Gj-lv5" id="Brj-BA-PIw"/>
+                <outlet property="isConnectImage3" destination="hrj-Zv-rov" id="IwE-1R-mbl"/>
+                <outlet property="isConnectImage4" destination="fqQ-CY-6xR" id="a5g-fv-Fi6"/>
                 <outlet property="itemsTableView" destination="td0-8b-e2c" id="yvd-or-gs8"/>
                 <outlet property="labelPath" destination="1c8-Pn-Fv0" id="CMd-6k-ibt"/>
+                <outlet property="needUpgradeBtn1" destination="Fc0-HV-WNZ" id="149-3x-D7Y"/>
+                <outlet property="needUpgradeBtn2" destination="Qxn-cL-6ct" id="ZfK-uT-hva"/>
+                <outlet property="needUpgradeBtn3" destination="fea-xN-wlM" id="QUj-Vh-W0J"/>
+                <outlet property="needUpgradeBtn4" destination="IQU-PY-X61" id="XaS-qC-6fW"/>
                 <outlet property="snTableView" destination="NzF-er-dSB" id="ALw-ZL-1Q3"/>
                 <outlet property="view" destination="sMz-VM-xT2" id="vxJ-dR-5DR"/>
             </connections>
@@ -333,28 +344,28 @@
             <point key="canvasLocation" x="-729" y="-89"/>
         </customView>
         <customView id="sMz-VM-xT2">
-            <rect key="frame" x="0.0" y="0.0" width="700" height="368"/>
+            <rect key="frame" x="0.0" y="0.0" width="700" height="808"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgT-Wh-ntR">
-                    <rect key="frame" x="19" y="15" width="320" height="157"/>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgT-Wh-ntR" userLabel="ch1">
+                    <rect key="frame" x="19" y="549" width="320" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b6O-uB-mMw">
-                    <rect key="frame" x="19" y="191" width="320" height="157"/>
+                    <rect key="frame" x="19" y="682" width="320" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcc-Y7-tAb">
-                    <rect key="frame" x="360" y="13" width="320" height="157"/>
+                    <rect key="frame" x="360" y="549" width="320" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fCj-T9-c1U">
-                    <rect key="frame" x="360" y="191" width="320" height="157"/>
+                    <rect key="frame" x="360" y="682" width="320" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uRa-t1-0Yt">
-                    <rect key="frame" x="123" y="348" width="112" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                    <rect key="frame" x="123" y="788" width="112" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="ping 169.254.1.32" id="ydE-g0-g21">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -362,8 +373,8 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cab-yM-0JW">
-                    <rect key="frame" x="464" y="348" width="112" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                    <rect key="frame" x="464" y="788" width="112" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="ping 169.254.1.33" id="s55-Sq-Tzy">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -371,8 +382,8 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wwF-Qu-kyQ">
-                    <rect key="frame" x="123" y="171" width="112" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                    <rect key="frame" x="123" y="657" width="112" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="ping 169.254.1.34" id="VAt-fE-Tb9">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -380,16 +391,238 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2e8-k9-PHM">
-                    <rect key="frame" x="464" y="171" width="112" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                    <rect key="frame" x="464" y="657" width="112" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="ping 169.254.1.35" id="Y2f-gh-PK8">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWS-bh-KzZ">
+                    <rect key="frame" x="20" y="0.0" width="660" height="290"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                </customView>
+                <box fixedFrame="YES" title="UUT1" translatesAutoresizingMaskIntoConstraints="NO" id="EjJ-2q-12L">
+                    <rect key="frame" x="16" y="446" width="158" height="95"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="d3k-SA-fYg">
+                        <rect key="frame" x="3" y="3" width="152" height="77"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fc0-HV-WNZ">
+                                <rect key="frame" x="18" y="14" width="111" height="18"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="check" title="needUpgrade" bezelStyle="regularSquare" imagePosition="trailing" state="on" inset="2" id="cxI-KY-aIz">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mfr-FD-LM6">
+                                <rect key="frame" x="105" y="38" width="28" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" image="state_off" id="5N9-TS-ofF"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pp4-cn-oMG">
+                                <rect key="frame" x="18" y="41" width="81" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="isConnected" id="MSf-PR-AUs">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="UUT2" translatesAutoresizingMaskIntoConstraints="NO" id="LHQ-Ku-HOi">
+                    <rect key="frame" x="184" y="446" width="158" height="95"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="67j-TN-nvl">
+                        <rect key="frame" x="3" y="3" width="152" height="77"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qxn-cL-6ct">
+                                <rect key="frame" x="18" y="14" width="111" height="18"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="check" title="needUpgrade" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="4jx-ds-uvI">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MXJ-Gj-lv5">
+                                <rect key="frame" x="105" y="38" width="28" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" image="state_off" id="N3w-9E-Xb9"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Mb-ba-ZhK">
+                                <rect key="frame" x="18" y="41" width="81" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="isConnected" id="CzT-8n-4ku">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="ACE FW Upgrade" translatesAutoresizingMaskIntoConstraints="NO" id="ZIJ-bT-PvJ">
+                    <rect key="frame" x="17" y="371" width="666" height="71"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="grF-0M-FNH">
+                        <rect key="frame" x="3" y="3" width="660" height="53"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UTs-tA-9hc">
+                                <rect key="frame" x="6" y="16" width="392" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="J517_J520_J522-USBC-2.62.0.9-A1-11-P0-AP-SS.bin" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="tWf-WQ-Lqf" id="dlh-3I-pLV">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="YMz-3f-ri1">
+                                        <items>
+                                            <menuItem title="J517_J520_J522-USBC-2.62.0.9-A1-11-P0-AP-SS.bin" state="on" id="tWf-WQ-Lqf"/>
+                                            <menuItem title="Item 2" id="3sj-p5-Wxo"/>
+                                            <menuItem title="Item 3" id="00j-OP-tNo"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LYH-2F-zCR">
+                                <rect key="frame" x="409" y="16" width="131" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="firmware.md5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="9y8-aU-4gS" id="cNR-rP-eb9">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="ZAW-OT-ENF">
+                                        <items>
+                                            <menuItem title="firmware.md5" state="on" id="9y8-aU-4gS"/>
+                                            <menuItem title="Item 2" id="S0Z-zT-67t"/>
+                                            <menuItem title="Item 3" id="TrC-Zr-CtU"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ca9-DC-6vc">
+                                <rect key="frame" x="550" y="12" width="112" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DN6-zm-JET">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="aceUpdate:" target="-2" id="ZCV-Uv-XHZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="Mix FW Upgrade" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-V9-V00">
+                    <rect key="frame" x="16" y="296" width="666" height="71"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="Tb8-0u-TXF">
+                        <rect key="frame" x="3" y="3" width="660" height="53"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fUo-CS-oLe">
+                                <rect key="frame" x="505" y="12" width="112" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2Ib-6q-zxE">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="mixUpdate:" target="-2" id="gek-6J-c09"/>
+                                </connections>
+                            </button>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWC-NC-O7J">
+                                <rect key="frame" x="51" y="16" width="392" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="MIX_FW_J517_J522_DFU_SC_22.tar" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="PZW-4B-f6J" id="8Ep-lb-nyl">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="n9F-5I-t8d">
+                                        <items>
+                                            <menuItem title="MIX_FW_J517_J522_DFU_SC_22.tar" state="on" id="PZW-4B-f6J"/>
+                                            <menuItem title="Item 2" id="sSe-cn-gMr"/>
+                                            <menuItem title="Item 3" id="uLo-5E-Aaa"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                        </subviews>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="UUT3" translatesAutoresizingMaskIntoConstraints="NO" id="kQy-nu-t8i">
+                    <rect key="frame" x="357" y="446" width="158" height="95"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="3lg-pW-nfM">
+                        <rect key="frame" x="3" y="3" width="152" height="77"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fea-xN-wlM">
+                                <rect key="frame" x="18" y="14" width="111" height="18"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="check" title="needUpgrade" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="XH0-U2-0S7">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hrj-Zv-rov">
+                                <rect key="frame" x="105" y="38" width="28" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" image="state_off" id="5SJ-IN-1Ob"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6c-y9-a6u">
+                                <rect key="frame" x="18" y="41" width="81" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="isConnected" id="ZDU-JU-MCS">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="UUT4" translatesAutoresizingMaskIntoConstraints="NO" id="oTb-dW-ALW">
+                    <rect key="frame" x="525" y="446" width="158" height="95"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="xTp-0I-7k3">
+                        <rect key="frame" x="3" y="3" width="152" height="77"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQU-PY-X61">
+                                <rect key="frame" x="18" y="14" width="111" height="18"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="check" title="needUpgrade" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="jJT-nl-ZkP">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqQ-CY-6xR">
+                                <rect key="frame" x="105" y="38" width="28" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" image="state_off" id="zZS-JZ-0Lh"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mM0-wm-Qn8">
+                                <rect key="frame" x="18" y="41" width="81" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="isConnected" id="wHC-jU-QTc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </box>
             </subviews>
-            <point key="canvasLocation" x="251" y="-21"/>
+            <point key="canvasLocation" x="251" y="199"/>
         </customView>
     </objects>
+    <resources>
+        <image name="state_off" width="30" height="30"/>
+    </resources>
 </document>

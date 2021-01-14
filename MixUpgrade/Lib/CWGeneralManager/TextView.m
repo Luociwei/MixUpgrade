@@ -5,7 +5,7 @@
 //  Created by ciwei luo on 2020/12/24.
 //  Copyright © 2020 macdev. All rights reserved.
 //
-
+#import "Task.h"
 #import "TextView.h"
 //#import "CWGeneralManager.h"
 #import "NSString+Extension.h"
@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSTextView *logTextView;
 //@property (unsafe_unretained) IBOutlet NSTextView *logTextView;
 @property (nonatomic, strong) NSScrollView *scrollView;
+
 @end
 
 
@@ -198,6 +199,38 @@
         }
     });
 }
+
+
+
+-(void)searchIpFrom:(NSString *)ip to:(NSInteger)ipRangeCount{
+    //    if ([self.title containsString:@"1"]) {
+    //        return;
+    //    }
+    
+    NSArray *ipSegmentArr = [ip cw_componentsSeparatedByString:@"."];
+    NSInteger ipSegmentEnd = [ipSegmentArr.lastObject integerValue];
+    
+    NSString *ipPingSegments = [NSString stringWithFormat:@"%@.%@.%@.",ipSegmentArr[0],ipSegmentArr[1],ipSegmentArr[2]];
+    
+//    NSString *ip_address = [NSString stringWithFormat:@"ping %@",ipStart];
+    BOOL isSearch = NO;
+    for (int i =0; i<ipRangeCount; i++) {
+        NSString *ip =[NSString stringWithFormat:@"%@%ld",ipPingSegments,ipSegmentEnd+i];
+        NSString *pingIP =[NSString stringWithFormat:@"ping %@ -t1",ip];
+        NSString *read  = [Task termialWithCmd:pingIP];
+        if ([read containsString:@"icmp_seq="]&&[read containsString:@"ttl="]) {
+            [self showLog:[NSString stringWithFormat:@"Connect IP:%@",ip]];
+            isSearch = YES;
+        }
+    }
+    if (!isSearch) {
+        [self showLog:@"Connect IP:None"];
+    }
+
+}
+
+
+
 
 
 @end

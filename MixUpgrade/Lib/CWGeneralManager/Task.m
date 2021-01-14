@@ -16,25 +16,73 @@
     NSPipe *readPipe;
     NSFileHandle *readHandle;
     NSPipe *writePipe;
-//    NSFileHandle *writeHandle;
+    NSFileHandle *writeHandle;
 }
 
--(instancetype)initWithLauchPath:(NSString *)lauchPath  arguments:(NSArray *)arguments{
+-(instancetype)initWithLauchPath:(NSString *)lauchPath  cmd:(NSString *)cmd{
     if (self=[super init]) {
         
         task = [[NSTask alloc] init];
         [task setLaunchPath:lauchPath];//@"/usr/bin/python"
-
+        [task setArguments:[NSArray arrayWithObjects:@"-c",@"ls",nil]];
+//        task.currentDirectoryPath = NSHomeDirectory();
+//        if (@available(macOS 10.13, *)) {
+//            task.executableURL = [NSURL fileURLWithPath:lauchPath];
+//        } else {
+//            // Fallback on earlier versions
+//        }
         readPipe = [NSPipe pipe];
         readHandle = [readPipe fileHandleForReading];
         writePipe = [NSPipe pipe];
         _writeHandle = [writePipe fileHandleForWriting];
         [task setStandardInput:writePipe];
         [task setStandardOutput:readPipe];
+//       [task waitUntilExit];
         [task launch];
+        
+        NSString * read =[self cw_read];
+        NSLog(@"%@",read);
         
     }
     return self;
+}
+
+
++(NSString *)termialWithCmd:(NSString *)cmd{
+    
+   NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];//@"/usr/bin/python"
+    [task setArguments:[NSArray arrayWithObjects:@"-c",cmd,nil]];
+    //        task.currentDirectoryPath = NSHomeDirectory();
+    //        if (@available(macOS 10.13, *)) {
+    //            task.executableURL = [NSURL fileURLWithPath:lauchPath];
+    //        } else {
+    //            // Fallback on earlier versions
+    //        }
+    NSPipe *readPipe = [NSPipe pipe];
+    NSFileHandle *readHandle = [readPipe fileHandleForReading];
+
+    [task setStandardOutput:readPipe];
+//    [task waitUntilExit];
+    [task launch];
+    
+    
+    NSMutableString *mut_string = [[NSMutableString alloc]init];
+    while (1) {
+        NSData *readData = [readHandle availableData];
+        if (!readData.length) {
+            break;
+        }
+        NSString *string = [[NSString alloc] initWithData:readData encoding:NSUTF8StringEncoding];
+        //        if (!string.length) {
+        //            break;
+        //        }
+        [mut_string appendString:string];
+    }
+    
+    NSLog(@"%@",mut_string);
+    return mut_string;
+    
 }
 
 
@@ -67,11 +115,11 @@
             readPipe = [NSPipe pipe];
             readHandle = [readPipe fileHandleForReading];
             writePipe = [NSPipe pipe];
-            _writeHandle = [writePipe fileHandleForWriting];
+            writeHandle = [writePipe fileHandleForWriting];
             [task setStandardInput:writePipe];
             [task setStandardOutput:readPipe];
             [task launch];
-//            [task waitUntilExit];
+            [task waitUntilExit];
  
 
             
@@ -120,7 +168,7 @@
         readPipe = [NSPipe pipe];
         readHandle = [readPipe fileHandleForReading];
         writePipe = [NSPipe pipe];
-        _writeHandle = [writePipe fileHandleForWriting];
+        writeHandle = [writePipe fileHandleForWriting];
         [task setStandardInput:writePipe];
         [task setStandardOutput:readPipe];
         [task launch];
@@ -136,8 +184,10 @@
 //    {
 //        return @"";
 //    }
-    NSData * in_data = [command dataUsingEncoding:(NSStringEncoding)NSUTF8StringEncoding];
-    [_writeHandle writeData:in_data];
+    [readHandle availableData];;
+    NSString *cmd = [NSString stringWithFormat:@"%@\n",command];
+    NSData * in_data = [cmd dataUsingEncoding:(NSStringEncoding)NSUTF8StringEncoding];
+    [writeHandle writeData:in_data];
     usleep(200000);
     //[QThread usleep: 100];
     NSData *readData = [readHandle availableData];

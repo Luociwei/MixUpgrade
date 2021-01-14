@@ -173,7 +173,7 @@
     system([[NSString stringWithFormat:@"open %@",path] UTF8String]);
 }
 
-+(NSArray *)getFilenamelistOfType:(NSString *)type fromDirPath:(NSString *)dirPath
++(NSArray *)cw_getFilenamelistOfType:(NSString *)type fromDirPath:(NSString *)dirPath
 {
     NSMutableArray *filenamelist = [[NSMutableArray alloc]init];
     NSArray *tmplist = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirPath error:nil];
@@ -181,7 +181,7 @@
     for (NSString *filename in tmplist) {
         NSString *fullpath = [dirPath stringByAppendingPathComponent:filename];
         if ([self cw_isFileExistAtPath:fullpath]) {
-            NSString *ss =[filename pathExtension];
+//            NSString *ss =[filename pathExtension];
             if ([[filename pathExtension] isEqualToString:type]) {
                 [filenamelist  addObject:filename];
             }

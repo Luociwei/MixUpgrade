@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)cw_serializationInMainBundleFile:(NSString *)fileName;
 +(void)cw_openFileWithPath:(NSString *)path;
 
-+(NSArray *)getFilenamelistOfType:(NSString *)type fromDirPath:(NSString *)dirPath;
++(NSArray *)cw_getFilenamelistOfType:(NSString *)type fromDirPath:(NSString *)dirPath;
 
 +(void)cw_copyBundleFileToDestPath:(NSString *)fullName destDir:(NSString *)destDir;
 

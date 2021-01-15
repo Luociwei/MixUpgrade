@@ -1,13 +1,14 @@
 //
 //  ViewController.m
-//  SC_Eowyn
+//  MixUpgrade
 //
-//  Created by ciwei luo on 2020/3/31.
-//  Copyright © 2020 ciwei luo. All rights reserved.
+//  Created by Louis Luo on 2020/3/31.
+//  Copyright © 2020 Suncode. All rights reserved.
 //
 
 #import "ViewController.h"
-
+#import "NSString+Extension.h"
+#import "Alert.h"
 #import "FileManager.h"
 #import "FMDB.h"
 #import "DataForFMDB.h"
@@ -40,8 +41,10 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 @property (nonatomic,strong)TextView *textView;
 
 @property (weak) IBOutlet NSPopUpButton *aceBinPopBtn;
-
 @property (weak) IBOutlet NSPopUpButton *aceMd5PopBtn;
+@property (weak) IBOutlet NSPopUpButton *mixFwPopBtn;
+
+
 @property (weak) IBOutlet NSButton *aceUpdateBtn;
 
 @property (weak) IBOutlet NSButton *needUpgradeBtn1;
@@ -58,6 +61,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 @property (copy) NSString *aceFwPath;
 @property (copy) NSString *mixFwPath;
 @property (copy) NSString *aceCheckPath;
+@property (copy) NSString *mixCheckPath;
 @end
 
 @implementation ViewController
@@ -93,8 +97,10 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     [self.viewCh2 setPingIpAddress:@"169.254.1.33"];
     [self.viewCh3 setPingIpAddress:@"169.254.1.34"];
     [self.viewCh4 setPingIpAddress:@"169.254.1.35"];
-    self.aceCheckPath = [[NSBundle mainBundle] pathForResource:@"fwdl_ace_check.exp" ofType:nil];
+    self.aceCheckPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"AceFW/fwdl_ace_check.exp"];
+    self.mixCheckPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"MixFW/fwdl_mix_check.exp"];
     self.aceFwPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"AceFW"];
+    self.mixFwPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"MixFW"];
     NSArray *aceBinFiles = [FileManager cw_getFilenamelistOfType:@"bin" fromDirPath:self.aceFwPath ];
     [self.aceBinPopBtn removeAllItems];
     [self.aceBinPopBtn addItemsWithTitles:aceBinFiles];
@@ -102,6 +108,11 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     NSArray *aceMd5Files = [FileManager cw_getFilenamelistOfType:@"md5" fromDirPath:self.aceFwPath];
     [self.aceMd5PopBtn removeAllItems];
     [self.aceMd5PopBtn addItemsWithTitles:aceMd5Files];
+    
+    NSArray *mixFwFiles = [FileManager cw_getFilenamelistOfType:@"tgz" fromDirPath:self.mixFwPath];
+    [self.mixFwPopBtn removeAllItems];
+    [self.mixFwPopBtn addItemsWithTitles:mixFwFiles];
+    
 //    rm -rf /users/macbookpro4/.ssh
 //    ssh-keygen -l -f ~/.ssh/known_hosts
 //    ssh-keygen -R 服务器端的ip地址
@@ -162,7 +173,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
                 [self setNeedUpgradeBtnState:self.needUpgradeBtn4 isConnect:YES];
          
             }
-            [NSThread sleepForTimeInterval:0.5];
+            [NSThread sleepForTimeInterval:0.3];
             
         }
         
@@ -204,72 +215,197 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     return isOk;
 }
 
-//-(BOOL)checkFile:(NSString *)fileName ip:(NSString *)ip{
-//    NSString *cmd1 = [NSString stringWithFormat:@"ssh root@%@",ip];
-//    NSString *cmd2 = @"yes\n";
-//    NSString *cmd3 = @"123456\n";
-//    NSString *log1 = [Task termialWithCmd:cmd1];
-//    if ([log1 containsString:@"yes/no"]) {
-//        [Task termialWithCmd:cmd2];
-//    }
-//    
-//    if ([log1 containsString:@"password"]) {
-//        NSString *log3 = [Task termialWithCmd:cmd3];
-//        if ([log3 containsString:@"root@ubuntu-arm:~#"]) {
-//            NSString *check = [Task termialWithCmd:@"ls /mix/dut_firmware/ch1/"];
-//            if ([check containsString:self.aceBinPopBtn.title]) {
-//                return YES;
-//            }
-//        }
-//        
-//        
-//        
-//    }else{
-//        }
-//    
-//    return NO;
-////    NSString *log1 = [Task termialWithCmd:cmd];
-//    
-//}
+-(BOOL)checkFile:(NSString *)fileName ip:(NSString *)ip ecpCheckPath:(NSString *)ecpCheckPath{
+
+    NSString *cmd = [NSString stringWithFormat:@"%@ %@",ecpCheckPath,ip];
+    NSString *log =[Task termialWithCmd:cmd];
+    
+    
+    if ([log containsString:fileName]) {
+        return YES;
+    }
+    
+    return NO;
+//    NSString *log1 = [Task termialWithCmd:cmd];
+    
+}
 - (IBAction)aceUpdate:(id)sender {
     NSString *aceExpPath=[self.aceFwPath stringByAppendingPathComponent:@"fwdl_scp.exp"];
     NSString *aceBinPath=[self.aceFwPath stringByAppendingPathComponent:self.aceBinPopBtn.title];
+    NSString *fileName = self.aceBinPopBtn.title;
+    NSMutableString *errorInfo = [[NSMutableString alloc]init];
     if (self.needUpgradeBtn1.state) {
 
         NSString *ip =@"169.254.1.32";
-        NSString *fileName = self.aceBinPopBtn.title;
-//        BOOL checkFileExist = [self checkFile:fileName ip:ip];
-//        if (checkFileExist) {
-//            [self.textView showLog:[NSString stringWithFormat:@"UUT1:%@ already existed in mix fw",fileName]];
-//        }
-        NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
-
-        NSString *log1 = [Task termialWithCmd:cmd];
-        [self.textView showLog:log1];
+        
+         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT1:%@ was existed in mix fw,no need to be updated\n",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
 
     }
     if (self.needUpgradeBtn2.state) {
-        NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,@"169.254.1.33"];
-
-        NSString *log2 = [Task termialWithCmd:cmd];
-        [self.textView showLog:log2];
+        
+        NSString *ip =@"169.254.1.33";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT2:%@ was existed in mix fw,no need to be updated\n",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+            
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
     }
     if (self.needUpgradeBtn3.state) {
-        NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,@"169.254.1.34"];
-
-        NSString *log3 = [Task termialWithCmd:cmd];
-        [self.textView showLog:log3];
+        
+        NSString *ip =@"169.254.1.34";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT3:%@ was existed in mix fw,no need to be updated\n",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
     }
     if (self.needUpgradeBtn4.state) {
-        NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,@"169.254.1.35"];
-
-        NSString *log4 = [Task termialWithCmd:cmd];
-        [self.textView showLog:log4];
+        
+        NSString *ip =@"169.254.1.35";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT4:%@ was existed in mix fw,no need to be updated",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
     }
+    
+//    if (errorInfo.length) {
+//        [Alert cw_messageBox:@"Warning" Information:errorInfo];
+//    }
     
 }
 
+
+-(NSString *)getFwCheckVersion:(NSString *)fwName{
+    
+    NSArray *arr1 = [fwName cw_componentsSeparatedByString:@"_"];
+    if (arr1.count) {
+        NSArray *arr2 = [arr1.lastObject cw_componentsSeparatedByString:@"."];
+        if (arr2.count) {
+            NSString *version = [NSString stringWithFormat:@"\"MIX_FW_PACKAGE\":\"%@\"",arr2.firstObject];
+            return version;
+        }
+    }
+    
+  
+    
+    return @"";
+}
+
 - (IBAction)mixUpdate:(id)sender {
+    NSString *fwExpPath=[self.mixFwPath stringByAppendingPathComponent:@"fwdl_scp_mix.exp"];
+    NSString *fwTgzPath=[self.mixFwPath stringByAppendingPathComponent:self.mixFwPopBtn.title];
+    NSString *fileName = [self getFwCheckVersion:self.mixFwPopBtn.title];
+    NSMutableString *errorInfo = [[NSMutableString alloc]init];
+    if (self.needUpgradeBtn1.state) {
+        
+        NSString *ip =@"169.254.1.32";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT1:%@ was existed in mix fw,no need to be updated\n",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
+    }
+    if (self.needUpgradeBtn2.state) {
+        
+        NSString *ip =@"169.254.1.33";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT2:%@ was existed in mix fw,no need to be updated\n",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+            
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
+    }
+    if (self.needUpgradeBtn3.state) {
+        
+        NSString *ip =@"169.254.1.34";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT3:%@ was existed in mix fw,no need to be updated\n",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
+    }
+    if (self.needUpgradeBtn4.state) {
+        
+        NSString *ip =@"169.254.1.35";
+        
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT4:%@ was existed in mix fw,no need to be updated",fileName];
+            [self.textView showLog:errorStr];
+            [errorInfo appendString:errorStr];
+        }else{
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            
+            NSString *log1 = [Task termialWithCmd:cmd];
+            [self.textView showLog:log1];
+        }
+        
+    }
+    
+    //    if (errorInfo.length) {
+    //        [Alert cw_messageBox:@"Warning" Information:errorInfo];
+    //    }
+    
 }
 
 

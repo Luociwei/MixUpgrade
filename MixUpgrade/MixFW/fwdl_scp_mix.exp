@@ -6,16 +6,25 @@
 #########################################################################
 
 set timeout 5
-set  IP		[ lindex $argv 0 ]
+set  FILE	[ lindex $argv 0 ]
+set  IP		[ lindex $argv 1 ]
+#set  DIR	[ lindex $argv 2 ] 
+set  DIR	/var/fw_update/upload
 set  HOST	root@$IP
 
-spawn ssh $HOST ls /mix/dut_firmware/ch1/
+spawn scp -r $FILE $HOST:$DIR
 expect {
 	"*yes/no*"		{ send "yes\n";exp_continue }
 	"*password*"	{ send "123456\n" }
 }
+interact
+sleep 1
 
-sleep 0.2
+spawn ssh $HOST sync
+expect {
+	"*yes/no*"		{ send "yes\n";exp_continue }
+	"*password*"	{ send "123456\n" }
+}
 
 interact
 #exit

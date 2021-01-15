@@ -2,7 +2,7 @@
 //  WindowController.h
 //  SC_CPK
 //
-//  Created by ciwei luo on 2020/4/5.
+//  Created by Louis Luo on 2020/4/5.
 //  Copyright © 2020 Suncode. All rights reserved.
 //
 

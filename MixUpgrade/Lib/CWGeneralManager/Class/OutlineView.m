@@ -2,7 +2,7 @@
 //  MyOutlineView.m
 //  CPK_Tool
 //
-//  Created by ciwei luo on 2020/6/27.
+//  Created by Louis Luo on 2020/6/27.
 //  Copyright © 2020 Suncode. All rights reserved.
 //
 

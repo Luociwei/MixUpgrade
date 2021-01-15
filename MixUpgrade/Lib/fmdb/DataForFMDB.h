@@ -2,8 +2,8 @@
 //  DataForFMDB.h
 //  MyBase
 //
-//  Created by ciwei luo on 2020/7/17.
-//  Copyright © 2020 macdev. All rights reserved.
+//  Created by Louis Luo on 2020/7/17.
+//  Copyright © 2020 Suncode. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -17,6 +17,7 @@
                 <outlet property="isConnectImage4" destination="fqQ-CY-6xR" id="a5g-fv-Fi6"/>
                 <outlet property="itemsTableView" destination="td0-8b-e2c" id="yvd-or-gs8"/>
                 <outlet property="labelPath" destination="1c8-Pn-Fv0" id="CMd-6k-ibt"/>
+                <outlet property="mixFwPopBtn" destination="GWC-NC-O7J" id="eiL-gl-Lk1"/>
                 <outlet property="needUpgradeBtn1" destination="Fc0-HV-WNZ" id="149-3x-D7Y"/>
                 <outlet property="needUpgradeBtn2" destination="Qxn-cL-6ct" id="ZfK-uT-hva"/>
                 <outlet property="needUpgradeBtn3" destination="fea-xN-wlM" id="QUj-Vh-W0J"/>
@@ -413,7 +414,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fc0-HV-WNZ">
                                 <rect key="frame" x="107" y="14" width="22" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="trailing" enabled="NO" state="on" inset="2" id="cxI-KY-aIz">
+                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="trailing" enabled="NO" inset="2" id="cxI-KY-aIz">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -433,9 +434,9 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n9X-kN-Nj0">
-                                <rect key="frame" x="15" y="14" width="87" height="17"/>
+                                <rect key="frame" x="19" y="14" width="79" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="needUpgrade" id="eoa-6r-fcV">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="canUpgrade" id="eoa-6r-fcV">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -454,7 +455,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qxn-cL-6ct">
                                 <rect key="frame" x="107" y="14" width="22" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" enabled="NO" state="on" inset="2" id="4jx-ds-uvI">
+                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" enabled="NO" inset="2" id="4jx-ds-uvI">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -474,9 +475,9 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LPr-td-GZt">
-                                <rect key="frame" x="15" y="14" width="87" height="17"/>
+                                <rect key="frame" x="19" y="14" width="79" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="needUpgrade" id="mLP-r2-glj">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="canUpgrade" id="mLP-r2-glj">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -582,7 +583,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fea-xN-wlM">
                                 <rect key="frame" x="107" y="14" width="22" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" enabled="NO" state="on" inset="2" id="XH0-U2-0S7">
+                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" enabled="NO" inset="2" id="XH0-U2-0S7">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -602,9 +603,9 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qer-aU-QYi">
-                                <rect key="frame" x="15" y="15" width="87" height="17"/>
+                                <rect key="frame" x="19" y="15" width="79" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="needUpgrade" id="g11-YE-Vwg">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="canUpgrade" id="g11-YE-Vwg">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -623,7 +624,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQU-PY-X61">
                                 <rect key="frame" x="107" y="14" width="22" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" enabled="NO" state="on" inset="2" id="jJT-nl-ZkP">
+                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" enabled="NO" inset="2" id="jJT-nl-ZkP">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -643,9 +644,9 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dAY-lL-kj0">
-                                <rect key="frame" x="15" y="15" width="87" height="17"/>
+                                <rect key="frame" x="19" y="15" width="79" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="needUpgrade" id="tNO-qh-gMb">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="canUpgrade" id="tNO-qh-gMb">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

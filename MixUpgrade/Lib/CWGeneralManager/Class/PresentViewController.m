@@ -2,7 +2,7 @@
 //  ModalViewController.m
 //  CPK_Tool
 //
-//  Created by ciwei luo on 2020/6/24.
+//  Created by Louis Luo on 2020/6/24.
 //  Copyright © 2020 Suncode. All rights reserved.
 //
 

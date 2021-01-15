@@ -2,7 +2,7 @@
 //  NSString+Extension.m
 //  Smart_Charge
 //
-//  Created by ciwei luo on 2017/8/5.
+//  Created by Louis Luo on 2017/8/5.
 //  Copyright © 2017 Innorev. All rights reserved.
 //
 

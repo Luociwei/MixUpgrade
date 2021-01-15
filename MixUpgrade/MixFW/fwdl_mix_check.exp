@@ -14,7 +14,7 @@ spawn ssh $HOST
 expect {
     "*yes/no*"        { send "yes\n";exp_continue }
     "*password*"    { send "123456\n";exp_continue }
-    "Documentation"    { send "ls /mix/dut_firmware/ch1\n";exp_continue }
+    "Documentation"    { send "cat /mix/version.json\n";exp_continue }
     "#"            { send "exit\n";exp_continue }
 }
 

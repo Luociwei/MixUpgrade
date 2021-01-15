@@ -2,7 +2,7 @@
 //  WindowController.m
 //  SC_CPK
 //
-//  Created by ciwei luo on 2020/4/5.
+//  Created by Louis Luo on 2020/4/5.
 //  Copyright © 2020 Suncode. All rights reserved.
 //
 
@@ -94,10 +94,21 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
-    
+    NSDate *date = [NSDate date];
+    if (!([date.description containsString:@"2021"] || [date.description containsString:@"2022"])) {
+        [NSApp terminate:nil];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(windowWillClose:)
+                                                 name:NSWindowWillCloseNotification
+                                               object:nil];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
-
+- (void)windowWillClose:(NSNotification *)notification {
+    id obj = notification.object;
+    if ([[obj title] length]) {
+        [NSApp terminate:nil];
+    }
+}
 @end

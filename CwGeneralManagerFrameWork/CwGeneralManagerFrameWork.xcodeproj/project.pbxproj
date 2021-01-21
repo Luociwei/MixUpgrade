@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA12830325B7C365000AE325 /* CwGeneralManagerBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA12830225B7C365000AE325 /* CwGeneralManagerBundle.bundle */; };
 		BAE02CFD25B3F17A0063A886 /* FileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02CE725B3F17A0063A886 /* FileManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAE02CFE25B3F17A0063A886 /* Task.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02CE825B3F17A0063A886 /* Task.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAE02CFF25B3F17A0063A886 /* JXArcCompatibilityMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02CE925B3F17A0063A886 /* JXArcCompatibilityMacros.h */; };
@@ -28,7 +29,6 @@
 		BAE02D0F25B3F17A0063A886 /* Alert.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02CF925B3F17A0063A886 /* Alert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAE02D1025B3F17A0063A886 /* OutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02CFA25B3F17A0063A886 /* OutlineView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAE02D1125B3F17A0063A886 /* TextView.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02CFB25B3F17A0063A886 /* TextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAE02D2525B3F8A60063A886 /* CwGeneralManagerBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BAE02D2425B3F8A60063A886 /* CwGeneralManagerBundle.bundle */; };
 		BAE02D3025B406B30063A886 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = BAE02D2E25B406B30063A886 /* Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAE02D3125B406B30063A886 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE02D2F25B406B30063A886 /* Image.m */; };
 /* End PBXBuildFile section */
@@ -36,6 +36,7 @@
 /* Begin PBXFileReference section */
 		71B0A1861DCDCD46004165A8 /* CwGeneralManagerFrameWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CwGeneralManagerFrameWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71B0A18A1DCDCD46004165A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA12830225B7C365000AE325 /* CwGeneralManagerBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CwGeneralManagerBundle.bundle; sourceTree = "<group>"; };
 		BAE02CE725B3F17A0063A886 /* FileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
 		BAE02CE825B3F17A0063A886 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		BAE02CE925B3F17A0063A886 /* JXArcCompatibilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXArcCompatibilityMacros.h; sourceTree = "<group>"; };
@@ -57,7 +58,6 @@
 		BAE02CF925B3F17A0063A886 /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
 		BAE02CFA25B3F17A0063A886 /* OutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutlineView.h; sourceTree = "<group>"; };
 		BAE02CFB25B3F17A0063A886 /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
-		BAE02D2425B3F8A60063A886 /* CwGeneralManagerBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CwGeneralManagerBundle.bundle; sourceTree = "<group>"; };
 		BAE02D2E25B406B30063A886 /* Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		BAE02D2F25B406B30063A886 /* Image.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +76,6 @@
 		71B0A17C1DCDCD46004165A8 = {
 			isa = PBXGroup;
 			children = (
-				BAE02D2425B3F8A60063A886 /* CwGeneralManagerBundle.bundle */,
 				71B0A1881DCDCD46004165A8 /* CwGeneralManagerFrameWork */,
 				71B0A1871DCDCD46004165A8 /* Products */,
 				BAF189FA255558490000306D /* Frameworks */,
@@ -103,6 +102,7 @@
 		BAE02CE625B3F17A0063A886 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				BA12830225B7C365000AE325 /* CwGeneralManagerBundle.bundle */,
 				BAE02CE725B3F17A0063A886 /* FileManager.h */,
 				BAE02CF325B3F17A0063A886 /* FileManager.m */,
 				BAE02CFB25B3F17A0063A886 /* TextView.h */,
@@ -217,7 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAE02D2525B3F8A60063A886 /* CwGeneralManagerBundle.bundle in Resources */,
+				BA12830325B7C365000AE325 /* CwGeneralManagerBundle.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

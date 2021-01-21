@@ -49,8 +49,14 @@
 
 
 +(NSString *)termialWithCmd:(NSString *)cmd{
+    return [self termialWithCmd:cmd delay:0.1];
     
-   NSTask *task = [[NSTask alloc] init];
+}
+
+
++(NSString *)termialWithCmd:(NSString *)cmd delay:(int)delay{
+    
+    NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/bin/sh"];//@"/usr/bin/python"
     [task setArguments:[NSArray arrayWithObjects:@"-c",cmd,nil]];
     //        task.currentDirectoryPath = NSHomeDirectory();
@@ -61,7 +67,7 @@
     //        }
     NSPipe *readPipe = [NSPipe pipe];
     NSFileHandle *readHandle = [readPipe fileHandleForReading];
-
+    
     [task setStandardOutput:readPipe];
 //    [task waitUntilExit];
     [task launch];
@@ -69,10 +75,12 @@
     
     NSMutableString *mut_string = [[NSMutableString alloc]init];
     while (1) {
+        [NSThread sleepForTimeInterval:delay];
         NSData *readData = [readHandle availableData];
         if (!readData.length) {
             break;
         }
+        
         NSString *string = [[NSString alloc] initWithData:readData encoding:NSUTF8StringEncoding];
         //        if (!string.length) {
         //            break;

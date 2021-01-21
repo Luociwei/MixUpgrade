@@ -13,6 +13,7 @@
 #import <CwGeneralManagerFrameWork/Task.h>
 #import <CwGeneralManagerFrameWork/TextView.h>
 #import <CwGeneralManagerFrameWork/Image.h>
+#import <CwGeneralManagerFrameWork/CSVParser.h>
 
 NSString *vrectInit1 = @"hidreport -v 0x05ac -p 0x041F -i 0 set 0x90 0x90 0x3";
 
@@ -43,6 +44,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 @property (weak) IBOutlet NSPopUpButton *aceMd5PopBtn;
 @property (weak) IBOutlet NSPopUpButton *mixFwPopBtn;
 
+@property (weak) IBOutlet NSButton *mixUpdateBtn;
 
 @property (weak) IBOutlet NSButton *aceUpdateBtn;
 
@@ -56,52 +58,90 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 @property (weak) IBOutlet NSImageView *isConnectImage2;
 @property (weak) IBOutlet NSImageView *isConnectImage3;
 @property (weak) IBOutlet NSImageView *isConnectImage4;
-
+@property (copy) NSString *expPath;
 @property (copy) NSString *aceFwPath;
 @property (copy) NSString *mixFwPath;
 @property (copy) NSString *aceCheckPath;
 @property (copy) NSString *mixCheckPath;
+@property (copy) NSString *logFilePath;
 @end
 
 @implementation ViewController
 
-//- (IBAction)vrect:(NSButton *)sender {
-//
-//    [self.vrectReadTask send:vrectCmd];
-//    NSString *read = [self.vrectReadTask cw_read];
-//    self.logview.string = read;
-//
-//}
-//
+-(void)parserCSV{
+    
+    
+    NSString *path = @"/Users/ciweiluo/Desktop/SC371_FCT__Baseboard_20210120.csv";
+    NSString *csv = [FileManager cw_readFromFile:@"/Users/ciweiluo/Desktop/SC371_FCT__Baseboard_20210120.csv"];
+    CSVParser *parser=  [[CSVParser alloc] init];
+    if ([parser openFile:path]) {
+        NSArray *scriptArray = [parser parseFile];
+        NSMutableString *contentArr = [[NSMutableString alloc]init];
+        for (int i =0; i<scriptArray.count; i++) {
+            
+            NSArray *arr = scriptArray[i];
+            for (int j=0; j<arr.count; j++) {
+                [contentArr appendString:arr[j]];
+                if (j!=arr.count-1) {
+                    [contentArr appendString:@","];
+                }
+                
+                if (j==1) {
+                    [contentArr appendString:@","];
+                }
+            }
+            
+            [contentArr appendString:@"\n"];
+            
+        }
+        
+        
+        [FileManager cw_writeToFile:@"/Users/ciweiluo/Desktop/new.csv" content:contentArr];
+    }
+    
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
-    [NSString cw_getDesktopPath];
     
-    self.viewCh1 = [TextView cw_allocInitWithFrame:NSMakeRect(20, 680, 320, 100)];
+    [self.isConnectImage1 setImage:[Image cw_getGrayCircleImage]];
+    [self.isConnectImage2 setImage:[Image cw_getGrayCircleImage]];
+    [self.isConnectImage3 setImage:[Image cw_getGrayCircleImage]];
+    [self.isConnectImage4 setImage:[Image cw_getGrayCircleImage]];
+    
+    self.viewCh1 = [TextView cw_allocInitWithFrame:NSMakeRect(20, 654, 320, 100)];
     [self.view addSubview:self.viewCh1];
     
-    self.viewCh2 = [TextView cw_allocInitWithFrame:NSMakeRect(360, 680, 320, 100)];
+    self.viewCh2 = [TextView cw_allocInitWithFrame:NSMakeRect(360, 654, 320, 100)];
     [self.view addSubview:self.viewCh2];
     
-    self.viewCh3 = [TextView cw_allocInitWithFrame:NSMakeRect(20, 550, 320, 100)];
+    self.viewCh3 = [TextView cw_allocInitWithFrame:NSMakeRect(20, 521, 320, 100)];
     [self.view addSubview:self.viewCh3];
     
-    self.viewCh4 = [TextView cw_allocInitWithFrame:NSMakeRect(360, 550, 320, 100)];
+    self.viewCh4 = [TextView cw_allocInitWithFrame:NSMakeRect(360, 521, 320, 100)];
     [self.view addSubview:self.viewCh4];
     
-    self.textView = [TextView cw_allocInitWithFrame:NSMakeRect(20, 0, 660, 290)];
+    self.textView = [TextView cw_allocInitWithFrame:NSMakeRect(20, 0, 660, 264)];
     [self.view addSubview:self.textView];
  
     [self.viewCh1 setPingIpAddress:@"169.254.1.32"];
     [self.viewCh2 setPingIpAddress:@"169.254.1.33"];
     [self.viewCh3 setPingIpAddress:@"169.254.1.34"];
     [self.viewCh4 setPingIpAddress:@"169.254.1.35"];
-    self.aceCheckPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"Exp/fwdl_ace_check.exp"];
-    self.mixCheckPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"Exp/fwdl_mix_check.exp"];
-    self.aceFwPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"AceFW"];
-    self.mixFwPath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"MixFW"];
+    NSString *bundlePath = [FileManager cw_getAppResourcePath];
+    if (![FileManager cw_isFileExistAtPath:bundlePath]) {
+        bundlePath = [[NSBundle mainBundle] resourcePath];
+    }
+    [self.textView showLog:bundlePath];
+    [self.textView showLog:[[NSBundle mainBundle] resourcePath]];
+    self.aceCheckPath = [bundlePath stringByAppendingPathComponent:@"Exp/fwdl_ace_check.exp"];
+    self.mixCheckPath = [bundlePath stringByAppendingPathComponent:@"Exp/fwdl_mix_check.exp"];
+    self.aceFwPath = [bundlePath stringByAppendingPathComponent:@"AceFW"];
+    self.mixFwPath = [bundlePath stringByAppendingPathComponent:@"MixFW"];
+    self.expPath = [bundlePath stringByAppendingPathComponent:@"Exp"];
     NSArray *aceBinFiles = [FileManager cw_getFilenamelistOfType:@"bin" fromDirPath:self.aceFwPath ];
     [self.aceBinPopBtn removeAllItems];
     [self.aceBinPopBtn addItemsWithTitles:aceBinFiles];
@@ -125,6 +165,10 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 //    NSLog(@"%@",[Task termialWithCmd:@"ssh-keygen -R 169.254.1.35"]);
 
     
+    NSString *logPath = [[NSString cw_getUserPath] stringByAppendingPathComponent:@"MixUpgradeLog"];
+    [FileManager cw_createFile:logPath isDirectory:YES];
+    self.logFilePath = [logPath stringByAppendingPathComponent:@"tempLog.txt"];
+    [FileManager cw_createFile:self.logFilePath isDirectory:NO];
     [self getChannelsSate];
     
 }
@@ -133,6 +177,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 
 -(void)getChannelsSate{
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        int i = 0;
         while (1) {
      
             if (![self getIpState:@"169.254.1.32"]) {
@@ -175,6 +220,15 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
                 [self setNeedUpgradeBtnState:self.needUpgradeBtn4 isConnect:YES];
          
             }
+            i=i+1;
+            if (i==1) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.mixUpdateBtn.enabled = YES;
+                    self.aceUpdateBtn.enabled = YES;
+                    
+                });
+            }
+            
             [NSThread sleepForTimeInterval:0.3];
             
         }
@@ -227,7 +281,7 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     NSString *cmd = [NSString stringWithFormat:@"%@ %@",ecpCheckPath,ip];
     NSString *log =[Task termialWithCmd:cmd];
     
-    
+    [self.textView showLog:log];
     if ([log containsString:fileName]) {
         return YES;
     }
@@ -237,83 +291,168 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
     
 }
 - (IBAction)aceUpdate:(id)sender {
-    NSString *aceExpPath=[self.aceFwPath stringByAppendingPathComponent:@"fwdl_scp_ace.exp"];
+    NSString *aceExpPath=[self.expPath stringByAppendingPathComponent:@"fwdl_scp.exp"];
     NSString *aceBinPath=[self.aceFwPath stringByAppendingPathComponent:self.aceBinPopBtn.title];
+    NSString *aceMd5Path=[self.aceFwPath stringByAppendingPathComponent:self.aceMd5PopBtn.title];
     NSString *fileName = self.aceBinPopBtn.title;
-    NSMutableString *errorInfo = [[NSMutableString alloc]init];
+    NSMutableString *info = [[NSMutableString alloc]init];
     if (self.needUpgradeBtn1.state) {
-
+        
         NSString *ip =@"169.254.1.32";
         
-         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
-        if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT1:%@ was existed in mix fw,no need to be updated\n",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
-        }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
-            
-            NSString *log1 = [Task termialWithCmd:cmd];
-            [self.textView showLog:log1];
-        }
-
-    }
-    if (self.needUpgradeBtn2.state) {
-        
-        NSString *ip =@"169.254.1.33";
-        
         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
-        if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT2:%@ was existed in mix fw,no need to be updated\n",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
+        if (!checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT1:%@ was already existed in mix fw.\n",fileName];
+            [info appendString:errorStr];
+//            [self.textView showLog:errorStr];
             
         }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
+            NSString *cmd1 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceBinPath,ip,self.logFilePath];
             
-            NSString *log1 = [Task termialWithCmd:cmd];
-            [self.textView showLog:log1];
-        }
-        
-    }
-    if (self.needUpgradeBtn3.state) {
-        
-        NSString *ip =@"169.254.1.34";
-        
-        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
-        if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT3:%@ was existed in mix fw,no need to be updated\n",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
-        }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
+            NSString *log1 = [Task termialWithCmd:cmd1];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
             
-            NSString *log1 = [Task termialWithCmd:cmd];
             [self.textView showLog:log1];
-        }
-        
-    }
-    if (self.needUpgradeBtn4.state) {
-        
-        NSString *ip =@"169.254.1.35";
-        
-        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
-        if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT4:%@ was existed in mix fw,no need to be updated",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
-        }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",aceExpPath,aceBinPath,ip];
             
-            NSString *log1 = [Task termialWithCmd:cmd];
-            [self.textView showLog:log1];
+            NSString *cmd2 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceMd5Path,ip,self.logFilePath];
+            
+            NSString *log2 = [Task termialWithCmd:cmd2];
+            [NSThread sleepForTimeInterval:1.0];
+            log2  = [FileManager cw_readFromFile:self.logFilePath];
+            
+            [self.textView showLog:log2];
+            
+            
+            if ([log2 containsString:@"100%"]&&[log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT1:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT1:Upgrade Fail.\n"];
+            }
+            
         }
         
     }
     
-//    if (errorInfo.length) {
-//        [Alert cw_messageBox:@"Warning" Information:errorInfo];
-//    }
+    if (self.needUpgradeBtn2.state) {
+
+        NSString *ip =@"169.254.1.33";
+
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT2:%@ was already existed in mix fw.\n",fileName];
+//            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
+
+        }else{
+            NSString *cmd1 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceBinPath,ip,self.logFilePath];
+            
+            NSString *log1 = [Task termialWithCmd:cmd1];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            
+            [self.textView showLog:log1];
+            
+            NSString *cmd2 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceMd5Path,ip,self.logFilePath];
+            
+            NSString *log2 = [Task termialWithCmd:cmd2];
+            [NSThread sleepForTimeInterval:1.0];
+            log2  = [FileManager cw_readFromFile:self.logFilePath];
+
+            [self.textView showLog:log2];
+            
+            
+            if ([log2 containsString:@"100%"]&&[log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT2:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT2:Upgrade Fail.\n"];
+            }
+            
+        }
+
+    }
+
+    if (self.needUpgradeBtn3.state) {
+
+        NSString *ip =@"169.254.1.34";
+
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (!checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT3:%@ was already existed in mix fw.\n",fileName];
+//            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
+        }else{
+            NSString *cmd1 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceBinPath,ip,self.logFilePath];
+//            NSString *cmd1 = [NSString stringWithFormat:@"%@ %@ %@\n",aceExpPath,aceBinPath,ip];
+            NSString *log1 = [Task termialWithCmd:cmd1];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            
+            [self.textView showLog:log1];
+            
+            NSString *cmd2 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceMd5Path,ip,self.logFilePath];
+//            NSString *cmd2 = [NSString stringWithFormat:@"%@ %@ %@\n",aceExpPath,aceMd5Path,ip];
+            NSString *log2 = [Task termialWithCmd:cmd2];
+            [NSThread sleepForTimeInterval:1.0];
+            log2  = [FileManager cw_readFromFile:self.logFilePath];
+            
+            [self.textView showLog:log2];
+            
+            
+            if ([log2 containsString:@"100%"]&&[log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT3:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT3:Upgrade Fail.\n"];
+            }
+            
+        }
+
+    }
+    if (self.needUpgradeBtn4.state) {
+
+        NSString *ip =@"169.254.1.35";
+
+        BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.aceCheckPath];
+        if (checkFileExist) {
+            NSString *errorStr =[NSString stringWithFormat:@"UUT4:%@ was already existed in mix fw.\n",fileName];
+//            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
+        }else{
+            NSString *cmd1 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceBinPath,ip,self.logFilePath];
+            
+            NSString *log1 = [Task termialWithCmd:cmd1];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            
+            [self.textView showLog:log1];
+            
+            NSString *cmd2 = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",aceExpPath,aceMd5Path,ip,self.logFilePath];
+            
+            NSString *log2 = [Task termialWithCmd:cmd2];
+            [NSThread sleepForTimeInterval:1.0];
+            log2  = [FileManager cw_readFromFile:self.logFilePath];
+            
+            [self.textView showLog:log2];
+            
+            
+            if ([log2 containsString:@"100%"]&&[log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT4:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT4:Upgrade Fail.\n"];
+            }
+            
+        }
+
+    }
+    if (!info.length) {
+        [info appendString:@"Not Ready,Pls check connect!!"];
+    }
+    [Alert cw_RemindException:@"Warnning!!!" Information:info];
+    
     
 }
 
@@ -335,23 +474,34 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
 }
 
 - (IBAction)mixUpdate:(id)sender {
-    NSString *fwExpPath=[self.mixFwPath stringByAppendingPathComponent:@"fwdl_scp_mix.exp"];
+    if (!self.mixUpdateBtn.title.length) {
+        return;
+    }
+    NSString *fwExpPath=[self.expPath stringByAppendingPathComponent:@"fwdl_scp_mix.exp"];
     NSString *fwTgzPath=[self.mixFwPath stringByAppendingPathComponent:self.mixFwPopBtn.title];
     NSString *fileName = [self getFwCheckVersion:self.mixFwPopBtn.title];
-    NSMutableString *errorInfo = [[NSMutableString alloc]init];
+    NSMutableString *info = [[NSMutableString alloc]init];
     if (self.needUpgradeBtn1.state) {
         
         NSString *ip =@"169.254.1.32";
         
         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
         if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT1:%@ was existed in mix fw,no need to be updated\n",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
+            NSString *errorStr =[NSString stringWithFormat:@"UUT1:%@ was already existed in mix fw.\n",fileName];
+            //            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
         }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",fwExpPath,fwTgzPath,ip,self.logFilePath];
             
             NSString *log1 = [Task termialWithCmd:cmd];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            if ([log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT1:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT1:Upgrade Fail.\n"];
+            }
             [self.textView showLog:log1];
         }
         
@@ -362,14 +512,21 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
         
         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
         if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT2:%@ was existed in mix fw,no need to be updated\n",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
-            
+            NSString *errorStr =[NSString stringWithFormat:@"UUT2:%@ was already existed in mix fw.\n",fileName];
+            //            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
         }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",fwExpPath,fwTgzPath,ip,self.logFilePath];
             
             NSString *log1 = [Task termialWithCmd:cmd];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            if ([log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT2:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT2:Upgrade Fail.\n"];
+            }
             [self.textView showLog:log1];
         }
         
@@ -380,13 +537,21 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
         
         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
         if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT3:%@ was existed in mix fw,no need to be updated\n",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
+            NSString *errorStr =[NSString stringWithFormat:@"UUT3:%@ was already existed in mix fw.\n",fileName];
+            //            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
         }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",fwExpPath,fwTgzPath,ip,self.logFilePath];
             
             NSString *log1 = [Task termialWithCmd:cmd];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            if ([log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT3:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT3:Upgrade Fail.\n"];
+            }
             [self.textView showLog:log1];
         }
         
@@ -397,22 +562,31 @@ NSString *vrectCmd = @"hidreport -v 0x05ac -p 0x041F -i 3 set 0x82 0x82 0x29 0x2
         
         BOOL checkFileExist = [self checkFile:fileName ip:ip ecpCheckPath:self.mixCheckPath];
         if (checkFileExist) {
-            NSString *errorStr =[NSString stringWithFormat:@"UUT4:%@ was existed in mix fw,no need to be updated",fileName];
-            [self.textView showLog:errorStr];
-            [errorInfo appendString:errorStr];
+            NSString *errorStr =[NSString stringWithFormat:@"UUT4:%@ was already existed in mix fw.\n",fileName];
+            //            [self.textView showLog:errorStr];
+            [info appendString:errorStr];
         }else{
-            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@",fwExpPath,fwTgzPath,ip];
+            NSString *cmd = [NSString stringWithFormat:@"%@ %@ %@ >& %@\n",fwExpPath,fwTgzPath,ip,self.logFilePath];
             
             NSString *log1 = [Task termialWithCmd:cmd];
+            [NSThread sleepForTimeInterval:1.0];
+            log1  = [FileManager cw_readFromFile:self.logFilePath];
+            if ([log1 containsString:@"100%"]) {
+                
+                [info appendString:@"UUT4:Upgrade Successful.\n"];
+            }else{
+                [info appendString:@"UUT4:Upgrade Fail.\n"];
+            }
             [self.textView showLog:log1];
         }
         
     }
+    if (!info.length) {
+        [info appendString:@"Not Ready,Pls check connect!!"];
+    }
+    [Alert cw_RemindException:@"Warnning!!!" Information:info];
     
-    //    if (errorInfo.length) {
-    //        [Alert cw_messageBox:@"Warning" Information:errorInfo];
-    //    }
-    
+
 }
 
 

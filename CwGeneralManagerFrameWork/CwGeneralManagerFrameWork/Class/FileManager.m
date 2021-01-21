@@ -50,10 +50,10 @@
 }
 
 +(BOOL)cw_fileCanWrite:(NSString*)filePath{
-    if (![self cw_fileCanWrite:filePath]) {
+    if (![self fileCanWrite:filePath]) {
         [self cw_createFile:filePath isDirectory:NO];
     }
-    if (![self cw_fileCanWrite:filePath]) {
+    if (![self fileCanWrite:filePath]) {
         NSString *info = [NSString stringWithFormat:@"%@ was not able to be wrote",filePath ];
         [Alert cw_RemindException:@"Error" Information:info];
         return NO;
@@ -65,10 +65,14 @@
 {
     return [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
 }
-
++(NSString *)cw_getAppResourcePath{
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];
+    NSString *resourcePath =[[[bundlePath stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingString:@"/Resources"];
+    return resourcePath;
+}
 +(BOOL)cw_writeToFile:(NSString*)filePath content:(NSString*)content
 {
-    if ([self cw_fileCanWrite:filePath]) {
+    if (![self cw_fileCanWrite:filePath]) {
         return NO;
     }
     @synchronized(self) {
